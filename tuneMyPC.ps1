@@ -115,6 +115,21 @@ function automate_tune {
 
 }
 
+function power_enhance{
+    #sets power config to ultimate performance
+    powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
+    #restart pc to initialize changes made to the system
+    $userRes = Read-Host "Would you like to restart now? y|n: "
+    if($userRes.ToLower() -eq 'y'){
+        write-host "restarting your pc now" -ForegroundColor Green
+        #restarts pc without wait time
+        shutdown -r -t 0
+    }else{
+        write-host "Don't forget to restart your pc to initialize the power config changes" -ForegroundColor Yellow
+    }
+}
+
+
 $currentuser = $env:USERNAME
 $currentuserprofile = $env:USERPROFILE
 
@@ -122,11 +137,14 @@ if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]:
     Write-Host "User '$currentuser' running script as administrator from '$currentuserprofile'."
     $user_response = read-host "Press Enter to continue or any key to quit:"
     if($user_response -eq ''){
-        $choice = read-host "Press Enter 1 for auto tuneup or 2 for manual tuneup"
+        $choice = read-host "Press Enter 1 for manual tuneup 2 for for auto tuneup"
         if($choice -eq '1'){
             step_by_step_tune
+            write-host "Setting Power to Ultimate Performance"
+            power_enhance
         }else{
             automate_tune
+            power_enhance
         }
     }else{
         Write-Host "Good bye!" -ForegroundColor Yellow
