@@ -21,7 +21,7 @@ function step_by_step_tune {
             Write-Error "An error occurred while installing windows update module or updating signatures: $_"
         }
     } else {
-        Write-Host "oki :)" -ForegroundColor Green
+        Write-Host "Skipping..." -ForegroundColor Yellow
     }
 
     $install_update = Read-Host "Would you like to continue? y|n: "
@@ -39,7 +39,7 @@ function step_by_step_tune {
             Write-Error "An error occurred while retrieving or installing updates: $_"
         }
     } else {
-        Write-host "oki :)" -ForegroundColor Green 
+        Write-host "Skipping..." -ForegroundColor Yellow 
     }
 
     $fileSys_scan = Read-Host 'Would you like to tune up your system? y|n: '
@@ -57,7 +57,7 @@ function step_by_step_tune {
             Write-Error "An error occurred while scanning and optimizing the file system: $_"
         }
     } else {
-        Write-Host 'oki' -ForegroundColor Yellow
+        Write-Host 'Skipping...' -ForegroundColor Yellow
     }
 
     $get_secure = Read-Host "Would you like to perform quick security scan? y|n: "
@@ -83,7 +83,7 @@ function step_by_step_tune {
             }
         }
     } else {
-        write-host 'oh oki ' -ForegroundColor Red
+        write-host 'Continue... ' -ForegroundColor Red
     }
 }
 
@@ -96,6 +96,7 @@ function automate_tune {
     #>
 
     #grabs and runs windows updates
+    Write-Host $date -forgroundColor Yellow
     Write-Host 'Retrieving update...' -ForegroundColor Yellow
     Get-WindowsUpdate
     Write-Host 'Update Recieved!' -ForegroundColor Green
@@ -140,7 +141,7 @@ if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]:
         $choice = read-host "Press Enter 1 for manual tuneup 2 for for auto tuneup"
         if($choice -eq '1'){
             step_by_step_tune
-            write-host "Setting Power to Ultimate Performance"
+            write-host "Setting Power to Ultimate Performance" $date -forgroundColor Yellow
             power_enhance
         }else{
             automate_tune
