@@ -45,7 +45,7 @@ function step_by_step_tune {
     $fileSys_scan = Read-Host 'Would you like to tune up your system? y|n: '
     if($fileSys_scan.ToLower() -eq 'y') {
         try {
-            Write-Host 'FileSystem scan start ' $date -ForegroundColor White -BackgroundColor Yellow
+            Write-Host 'FileSystem scan start ' $date -ForegroundColor White 
             # scans file system defrags and trims C drive(c is most likely the boot sector)
             sfc /scannow
             Optimize-Volume -DriveLetter C -Analyze -Verbose
